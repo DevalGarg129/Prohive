@@ -8,9 +8,9 @@ import {
   getAllUserProfile,
   downloadProfile,
   sendConnectionRequest,
-  whatIsMyConnectionRequest,
+  whatAreMyConnections,
   acceptConnectionRequest,
-  getMyConnectionsRequests,
+  getMyConnectionRequests,
 } from "../controllers/user.controller.js";
 import multer from "multer";
 const router = Router();
@@ -40,7 +40,7 @@ router.route("/update_profile_picture").post(updateProfilePicture);
 router.route("/user/get_all_users").get(getAllUserProfile);
 router.route("/user/download_profile").get(downloadProfile);
 router.route("/user/send_connection_request").post(sendConnectionRequest);  
-router.route("/user/getConnectionRequests").get(getMyConnectionsRequests);
-router.route("/user/user_connection_request").get(whatIsMyConnectionRequest); 
+router.route("/user/getConnectionRequests").get(getMyConnectionRequests);
+router.route("/user/user_connection_request").get(whatAreMyConnections); 
 router.route("/user/accept_connection_request").post(acceptConnectionRequest);
 export default router;

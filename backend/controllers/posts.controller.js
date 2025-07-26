@@ -104,13 +104,16 @@ export default delete_comment_of_user = async (req, res) => {
 }
 
 export const increment_Likes = async (req, res) => {
-    const { post_id, token } = req.body;
+    const { post_id } = req.body;
 
     try {
-        const user = await User.findOne({ token: token }).select('_id');
-        if(!user) {
-            return res.status(404).json({ message: "User not found" });
+        const post = await Profile.findOne({ _id: post_id });
+        if(!post) {
+            return res.status(404).json({ message: "Post not found" });
         }
+
+        post.likes = post.likes ? post.likes + 1 : 1;
+        await post.save();
     }catch(error){
         return res.status(500).json({ message: "Server error", error: error.message });
     }

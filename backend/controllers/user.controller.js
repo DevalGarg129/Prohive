@@ -1,6 +1,6 @@
 import Profile from '../models/profile.model.js';
 import User from '../models/user.model.js';
-import ConnectionRequest from '../models/connectionRequest.model.js'; // Added import
+import connectionRequest from '../models/connections.model.js'; // Added import
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 import PDFDocument from 'pdfkit';
