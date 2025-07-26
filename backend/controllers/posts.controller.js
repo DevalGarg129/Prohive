@@ -61,3 +61,59 @@ export const deletePost = async (req, res) => {
         return res.status(500).json({ message: "Server error", error: error.message });
     }
 }
+
+export const get_comments_by_post = async (req, res) => {
+    const { post_id } = req.params;
+    try {
+        const post = await Post.findOne(post_id);
+
+        if (!post) {
+            return res.status(404).json({ message: "No comments found for this post" });
+        }
+
+        return res.json({ comments: post.comments });
+    } catch (error) {
+        return res.status(500).json({ message: "Internal server error" });
+    }
+}
+
+
+export default delete_comment_of_user = async (req, res) => {
+    const { token, comment_id } = req.body;
+
+    try{
+        const user = await User.findOne({ token: token }).select('_id');
+
+        if(!user){
+            return res.status(400).json({ message: "User not found" });
+        }
+
+        const comment = await Comment.findOne({ _id: comment_id });
+        if(!comment){
+            return res.status(400).json({ message: "Comment not found" });
+        }
+        if(comment.user.toString() !== user._id.toString()){
+            return res.status(403).json({ message: "You are not authorized to delete this comment" });
+        }
+        await Comment.deleteOne({ "_id" : comment_id });
+        return res.status(200).json({ message: "Comment deleted successfully" });
+    }
+    catch (error) {
+        return res.status(500).json({ message: "Internal server error" });
+    }
+}
+
+export const increment_Likes = async (req, res) => {
+    const { post_id, token } = req.body;
+
+    try {
+        const user = await User.findOne({ token: token }).select('_id');
+        if(!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+    }catch(error){
+        return res.status(500).json({ message: "Server error", error: error.message });
+    }
+}
+
+
